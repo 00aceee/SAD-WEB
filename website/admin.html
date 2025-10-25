@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Panel | MARMU Barber & Tattoo Shop</title>
+    <link rel="stylesheet" href="css/admin.css" />
+</head>
+
+<body class="dark-mode">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Admin Menu</h2>
+            <button class="menu-btn" onclick="showPanel('appointments')">📅 Manage Appointments</button>
+            <button class="menu-btn" onclick="showPanel('users')">👤 Manage Users</button>
+            <button class="menu-btn" onclick="showPanel('feedback')">⭐ View Feedback</button>
+            <button class="menu-btn" onclick="window.location.href='index.html'">🏠 Go to Main Window</button>
+            <button class="logout-btn" onclick="logout()">🚫 Logout</button>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content" id="adminContent">
+            <h1>Welcome, Admin</h1>
+            <p>Select a section from the left menu.</p>
+        </main>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add New User</h3>
+            <form id="addUserForm">
+                <label>Full Name:</label>
+                <input type="text" id="fullname" required>
+
+                <label>Username:</label>
+                <input type="text" id="username" required>
+
+                <label>Email:</label>
+                <input type="email" id="email" required>
+
+                <label>Password</label>
+                <input type="password" id="password">
+
+                <label>Confirm Password</label>
+                <input type="password" id="confirm_password">
+
+                <label>Role:</label>
+                <input type="text" id="role" required>
+
+                <button type="submit" class="save-btn">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedback Reply Modal -->
+    <div id="replyModal" class="modal-overlay" style="display:none;">
+        <div class="modal-content">
+            <h2 id="replyModalTitle">Reply to User Feedback</h2>
+
+            <div class="feedback-info">
+                <p><strong>User:</strong> <span id="modalUsername"></span></p>
+                <p id="modalEmailWrap"><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p class="stars" id="modalStars"></p>
+                <p><strong>User's Feedback:</strong></p>
+                <p class="user-message" id="modalMessage"></p>
+            </div>
+
+            <label for="replyBox"><strong>Your Reply:</strong></label>
+            <textarea id="replyBox" rows="6" placeholder="Write your reply here..."></textarea>
+
+            <div class="email-option">
+                <label>
+                    <input type="checkbox" id="sendEmail">
+                    Send reply via email
+                </label>
+                <p id="noEmailNote" class="no-email" style="display:none;">(No email associated with this user)</p>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="sendReplyBtn" class="btn-primary">Send Reply</button>
+                <button id="cancelBtn" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

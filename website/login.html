@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARMU | Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+
+  <div class="login-container">
+    <img src="assets/Logo.png" alt="Logo" class="logo">
+    <h2>MARMU BARBER & TATTOO SHOP</h2>
+    <p class="subtitle">Since 2022</p>
+
+    <div class="form-group">
+      <label>Username or Email</label>
+      <input type="text" id="username" placeholder="Enter username or email">
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Enter password">
+    </div>
+
+    <button onclick="loginUser()">Login</button>
+
+    <p class="link" onclick="openForgotPassword()">Forgot Password?</p>
+    <p class="link" onclick="openSignup()">Create Account</p>
+
+    <footer>Barber Ink © 2022</footer>
+  </div>
+
+  <script src="js/login.js"></script>
+</body>
+</html>

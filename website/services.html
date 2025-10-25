@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | MARMU Barber & Tattoo Shop</title>
+  <link rel="stylesheet" href="css/services.css" />
+</head>
+<body class="dark-mode">
+  <!-- Home Button -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="assets/Logo.png" alt="Logo" class="Logo" />
+    </div>
+
+  <!-- Tab Navigation -->
+  <div class="tab-container">
+    <button class="tab-btn active" onclick="showTab('tattoo')">
+      🎨 Tattoo Designs
+    </button>
+    <button class="tab-btn" onclick="showTab('haircut')">
+      ✂️ Haircut Styles
+    </button>
+  </div>
+
+  <!-- Tattoo Gallery -->
+  <div id="tattooGallery" class="gallery-container">
+    <h2 style="text-align: center; color: #8B4513; margin-bottom: 30px;">
+      Art That Stays With You Forever
+    </h2>
+    <div class="gallery-grid" id="tattooGrid">
+      <!-- Tattoo cards will be loaded here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Haircut Gallery -->
+  <div id="haircutGallery" class="gallery-container hidden">
+    <h2 style="text-align: center; color: #4169E1; margin-bottom: 30px;">
+      Cuts That Define Confidence
+    </h2>
+    <div class="gallery-grid" id="haircutGrid">
+      <!-- Haircut cards will be loaded here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Book Now Section -->
+  <div class="book-now-section">
+    <button class="book-now-btn" onclick="window.location.href='book.html'">
+      📅 Book an Appointment Now
+    </button>
+  </div>
+
+  <script src="js/services.js"></script>
+</body>
+</html>

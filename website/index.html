@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MARMU Barber & Tattoo Shop</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dark-mode">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="assets/Logo.png" alt="Logo" class="Logo" />
+    </div>
+    <div class="nav-menu">
+      <a href="index.html" class="nav-item">Homepage</a>
+      <a href="book.html" class="nav-item">Book Now</a>
+      <a href="services.html" class="nav-item">Services</a>
+      <a href="feedback.html" class="nav-item">Feedback</a>
+    </div>
+    <div class="nav-right">
+      <button id="profileBtn" class="profile-btn">👤</button>
+    </div>
+  </nav>
+
+  <!-- Banner Section -->
+  <section class="banner">
+    <img src="assets/Logo.png" alt="Banner" class="banner-img" />
+    <h1>MARMU BARBER & TATTOO SHOP</h1>
+    <p class="subtitle">Since 2022</p>
+  </section>
+
+  <!-- Features Section -->
+  <section class="feature-section">
+    <div class="feature">
+      <img src="assets/Haircut_Sample.png" alt="Haircut Styles" />
+      <div class="feature-text">
+        <h2>Cuts That Define Confidence</h2>
+        <p>
+          Confidence begins with a fresh cut. Our expert barbers are dedicated to crafting the perfect style for you.
+        </p>
+        <button onclick="openSection('haircut')">See Haircut Styles</button>
+      </div>
+    </div>
+
+    <div class="feature reverse">
+      <div class="feature-text">
+        <h2>Art That Stays With You</h2>
+        <p>
+          From intricate linework to bold custom pieces, our tattoos tell stories that last forever.
+        </p>
+        <button onclick="openSection('tattoo')">Explore Tattoo Designs</button>
+      </div>
+      <img src="assets/Sample_Tattoo.png" alt="Tattoo Designs" />
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <img src="assets/Logo.png" alt="Footer Logo" class="Logo" />
+    <p>Barber Ink © 2022</p>
+  </footer>
+
+  <!-- Profile Menu Panel -->
+  <div id="profileMenu" class="profile-menu hidden">
+    <div class="profile-header">
+      <h2>👤 User Profile</h2>
+      <button onclick="toggleProfileMenu()">✕</button>
+    </div>
+    <div class="profile-body">
+      <p><strong>Welcome,</strong> <span id="userFullname">Guest</span></p>
+      <p>Username: <span id="userUsername">-</span></p>
+      <p>Email: <span id="userEmail">-</span></p>
+      <hr />
+      <h3>📅 Upcoming Appointments</h3>
+      <ul id="appointmentList">
+        <li>No upcoming appointments.</li>
+      </ul>
+
+      <button onclick="toggleTheme()">🌙 Toggle Theme</button>
+      <button onclick="logoutUser()" class="logout-btn">🚪 Logout</button>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

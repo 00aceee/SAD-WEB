@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback | MARMU Barber & Tattoo</title>
+  <link rel="stylesheet" href="css/feedback.css" />
+</head>
+
+<body class="dark-mode">
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="assets/Logo.png" alt="Logo" class="Logo" />
+    </div>
+
+    <main>
+      <!-- Star Rating -->
+      <section class="feedback-form">
+        <div class="stars" id="stars">
+          <span onclick="setRating(1)">☆</span>
+          <span onclick="setRating(2)">☆</span>
+          <span onclick="setRating(3)">☆</span>
+          <span onclick="setRating(4)">☆</span>
+          <span onclick="setRating(5)">☆</span>
+        </div>
+
+        <textarea id="message" placeholder="Write your feedback..." rows="5"></textarea>
+
+        <button class="submit-btn" onclick="submitFeedback()">Submit Feedback</button>
+      </section>
+
+      <!-- Reviews List -->
+      <section class="reviews">
+        <h2>User Reviews</h2>
+        <div id="feedbackList" class="feedback-list"></div>
+      </section>
+    </main>
+
+    <script src="js/feedback.js"></script>
+</body>
+
+</html>

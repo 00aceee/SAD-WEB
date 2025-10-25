@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book an Appointment | MARMU Barber & Tattoo Shop</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="dark-mode">
+  <!-- Home Button -->
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="assets/Logo.png" alt="Logo" class="Logo" />
+    </div>
+
+  <main class="booking-container">
+    <form id="bookingForm" class="booking-form">
+      <label>Full Name:</label>
+      <input type="text" id="fullname" name="fullname" readonly value="" />
+
+      <label>Service:</label>
+      <select id="service" name="service" required>
+        <option value="">-- Select Service --</option>
+        <option value="Haircut">Haircut</option>
+        <option value="Tattoo">Tattoo</option>
+      </select>
+
+      <label>Date:</label>
+      <div class="date-picker">
+        <input type="date" id="date" name="date" required min="" />
+      </div>
+
+      <label>Time:</label>
+      <select id="time" name="time" disabled required>
+        <option>- Select a Date First -</option>
+      </select>
+
+      <label>Remarks (Optional):</label>
+      <textarea id="remarks" name="remarks" rows="4" placeholder="Any special requests or notes..."></textarea>
+
+      <button type="submit" id="submitBtn">Confirm Booking</button>
+    </form>
+  </main>
+
+  <script src="js/book.js"></script>
+</body>
+</html>
