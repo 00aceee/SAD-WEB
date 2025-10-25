@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, session, jsonify, send_from_directory
 from flask_cors import CORS
 import mysql.connector, smtplib, hashlib, random, re, os, glob
 from datetime import datetime, timedelta
@@ -13,7 +13,7 @@ from werkzeug.security import generate_password_hash
 # =========================================
 load_dotenv()
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 
 # =========================================
 # CONFIGURATION
@@ -159,12 +159,18 @@ def login():
         if not user or hash_password(password) != user["hash_pass"]:
             return jsonify({"error": "Invalid username/email or password"}), 401
 
+        # ✅ Store user in session
+        session["username"] = user["username"]
+        session["fullname"] = user["fullname"]
+        session["role"] = user["role"]
+
         return jsonify({
             "message": f"Welcome, {user['fullname']}",
             "username": user["username"],
             "fullname": user["fullname"],
             "role": user["role"]
         }), 200
+
     except mysql.connector.Error as err:
         return jsonify({"error": f"Database error: {err}"}), 500
     finally:
@@ -292,7 +298,16 @@ def reset_password():
 # =========================================
 # BOOKINGS
 # =========================================
-@app.route("/book", methods=["POST"])
+@app.route("/api/current_user")
+def current_user():
+    if 'username' in session:
+        return jsonify({
+            "username": session['username'],
+            "fullname": session['fullname']
+        })
+    return jsonify({"error": "Not logged in"}), 401
+
+@app.route("/api/bookings", methods=["POST"])
 def create_booking():
     data = request.get_json()
     username, fullname, service, date, time = (
@@ -352,7 +367,7 @@ def get_user_appointments(username):
 
 @app.route("/appointments/available_slots", methods=["GET"])
 def get_available_slots():
-    date = request.args.get("appointment_date")
+    date = request.args.get("date")  # instead of "appointment_date"
     if not date:
         return jsonify({"error": "Date parameter required"}), 400
 

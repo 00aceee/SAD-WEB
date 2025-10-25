@@ -1,16 +1,27 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const dateInput = document.getElementById("date");
     const timeSelect = document.getElementById("time");
     const form = document.getElementById("bookingForm");
     const submitBtn = document.getElementById("submitBtn");
+    const fullnameInput = document.getElementById("fullname");
 
     const AVAILABLE_TIMES = [
         "09:00", "10:00", "11:00", "12:00",
         "13:00", "14:00", "15:00", "16:00", "17:00"
     ];
 
-    const BOOKING_API = "/api/bookings"; // replace with your real API endpoint
-    const CURRENT_USER = "current_user"; // replace with actual username logic
+    const BOOKING_API = "/api/bookings";
+    const CURRENT_USER = localStorage.getItem("username");
+    const FULLNAME = localStorage.getItem("fullname");
+
+    if (!CURRENT_USER) {
+        alert("⚠️ You must log in before booking.");
+        submitBtn.disabled = true;
+        return;
+    }
+
+    // Autofill fullname
+    fullnameInput.value = FULLNAME || "";
 
     // Minimum date = today
     const today = new Date().toISOString().split("T")[0];
@@ -19,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch booked slots from server
     async function fetchBookedSlots(date) {
         try {
-            const res = await fetch(`http://127.0.0.1:5000/appointments/available_slots?date=${date}`);
+            const res = await fetch(`/appointments/available_slots?date=${date}`);
             const data = await res.json();
             return data.booked_times || [];
         } catch (err) {
@@ -27,6 +38,23 @@ document.addEventListener("DOMContentLoaded", () => {
             return [];
         }
     }
+
+    async function getCurrentUser() {
+        try {
+            const res = await fetch("/api/current_user");
+            const data = await res.json();
+            if (data.username) {
+                CURRENT_USER = data.username;
+                fullnameInput.value = data.fullname;
+            } else {
+                alert("You must log in first.");
+                submitBtn.disabled = true;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
 
     // Update time options when a date is chosen
     dateInput.addEventListener("change", async () => {
@@ -60,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const fullname = document.getElementById("fullname").value;
+        const fullname = fullnameInput.value;
         const service = document.getElementById("service").value;
         const date = dateInput.value;
         const time = timeSelect.value;
@@ -90,6 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             form.reset();
             timeSelect.disabled = true;
             timeSelect.innerHTML = "<option>- Select a Date First -</option>";
+            fullnameInput.value = FULLNAME || "";
         } catch (err) {
             alert(`❌ Error: ${err.message}`);
         } finally {

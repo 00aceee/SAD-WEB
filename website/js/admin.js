@@ -311,7 +311,7 @@ function replyFeedback(feedback) {
             if (res.ok) {
                 alert('✅ Reply sent successfully!');
                 modal.style.display = 'none';
-                showFeedback(document.getElementById('adminContent')); // refresh list
+                showFeedback(document.getElementById('adminContent')); 
             } else {
                 alert(`❌ Error: ${data.message || 'Failed to send reply.'}`);
             }

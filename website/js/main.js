@@ -17,7 +17,7 @@ document.addEventListener("click", (e) => {
 function updateProfileButton() {
   const profileBtn = document.getElementById("profileBtn");
   const user = getCurrentUser();
-  
+
   if (user.username) {
     profileBtn.textContent = "👤";
     profileBtn.onclick = toggleProfileMenu;
@@ -34,12 +34,12 @@ function toggleProfileMenu() {
 
 function loadUserProfile() {
   const user = getCurrentUser();
-  
+
   if (user.username) {
     document.getElementById("userFullname").textContent = user.fullname;
     document.getElementById("userUsername").textContent = user.username;
     document.getElementById("userEmail").textContent = localStorage.getItem("email") || "N/A";
-    
+
     loadUpcomingAppointments();
   }
 }
@@ -47,7 +47,7 @@ function loadUserProfile() {
 async function loadUpcomingAppointments() {
   const username = localStorage.getItem("username");
   const appointmentList = document.getElementById("appointmentList");
-  
+
   if (!username) {
     appointmentList.innerHTML = "<li>Please log in to view appointments.</li>";
     return;
@@ -58,7 +58,7 @@ async function loadUpcomingAppointments() {
   try {
     const res = await fetch(`http://127.0.0.1:5000/appointments/${username}`);
     const appointments = await res.json();
-    
+
     if (!appointments.length) {
       appointmentList.innerHTML = "<li>No upcoming appointments.</li>";
       return;
