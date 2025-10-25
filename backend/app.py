@@ -14,6 +14,7 @@ from werkzeug.security import generate_password_hash
 load_dotenv()
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+app.secret_key = os.getenv("SECRET_KEY", "supersecretkey")  # Ensure sessions work
 
 # =========================================
 # CONFIGURATION
@@ -39,7 +40,6 @@ def is_valid_email(email):
     return re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', email)
 
 def send_email_otp(email, subject, otp):
-    """Send OTP email via Gmail SMTP"""
     html_body = f"""
     <html><body>
     <h2>MARMU Barber & Tattoo Shop</h2>
@@ -48,7 +48,6 @@ def send_email_otp(email, subject, otp):
     <p>This code will expire in {OTP_EXPIRY_MINUTES} minutes.</p>
     </body></html>
     """
-
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = YOUR_GMAIL
@@ -59,6 +58,24 @@ def send_email_otp(email, subject, otp):
         server.starttls()
         server.login(YOUR_GMAIL, YOUR_APP_PASSWORD)
         server.send_message(msg)
+
+def send_feedback_reply_email(to_email, username, reply):
+    subject = "Reply to Your Feedback"
+    body = f"Hi {username},\n\nThank you for your feedback.\n\nOur reply:\n{reply}\n\nBest regards,\nThe Team"
+    
+    msg = MIMEText(body)
+    msg["Subject"] = subject
+    msg["From"] = "your_email@example.com"
+    msg["To"] = to_email
+
+    try:
+        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+            server.starttls()
+            server.login("your_email@example.com", "your_password")
+            server.sendmail(msg["From"], [to_email], msg.as_string())
+        print("✅ Email sent successfully")
+    except Exception as e:
+        print("❌ Email sending failed:", e)
 
 # =========================================
 # STATIC FILES
@@ -118,23 +135,6 @@ def post_feedback():
     finally:
         conn.close()
 
-def send_feedback_reply_email(to_email, username, reply):
-    subject = "Reply to Your Feedback"
-    body = f"Hi {username},\n\nThank you for your feedback.\n\nOur reply:\n{reply}\n\nBest regards,\nThe Team"
-    
-    msg = MIMEText(body)
-    msg["Subject"] = subject
-    msg["From"] = "your_email@example.com"
-    msg["To"] = to_email
-
-    try:
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
-            server.starttls()
-            server.login("your_email@example.com", "your_password")
-            server.sendmail(msg["From"], [to_email], msg.as_string())
-        print("✅ Email sent successfully")
-    except Exception as e:
-        print("❌ Email sending failed:", e)
 # =========================================
 # AUTHENTICATION
 # =========================================
@@ -159,7 +159,6 @@ def login():
         if not user or hash_password(password) != user["hash_pass"]:
             return jsonify({"error": "Invalid username/email or password"}), 401
 
-        # ✅ Store user in session
         session["username"] = user["username"]
         session["fullname"] = user["fullname"]
         session["role"] = user["role"]
